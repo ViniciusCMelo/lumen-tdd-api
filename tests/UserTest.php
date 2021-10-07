@@ -2,10 +2,9 @@
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-
 class UserTest extends TestCase {
-
     use DatabaseTransactions;
+
     /**
      * A User test.
      *
@@ -28,5 +27,17 @@ class UserTest extends TestCase {
         $this->assertArrayHasKey('email', $response);
         $this->assertArrayHasKey('id', $response);
 
+    }
+
+    public function testViewUser() {
+        $user = \App\Models\User::first();
+        $this->get('/api/user/'.$user->id);
+
+        $this->assertResponseOk();
+        $response = (array)json_decode($this->response->content());
+
+        $this->assertArrayHasKey('name', $response);
+        $this->assertArrayHasKey('email', $response);
+        $this->assertArrayHasKey('id', $response);
     }
 }

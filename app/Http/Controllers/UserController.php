@@ -25,4 +25,8 @@ class UserController extends Controller {
         $user->save();
         return $user;
     }
+
+    public function view($id) {
+        return User::find($id);
+    }
 }
